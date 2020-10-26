@@ -7,6 +7,7 @@ const superTest = require('supertest'),
     // schema = require('../schema/events'),
     data = require('../testData/logcont_list'),
     Joi = require('joi');
+    const fs = require('fs');
 jest.setTimeout(100000);
 
 
@@ -24,6 +25,8 @@ describe('GET_List', () => {
                 expect(Object.keys(res.body).length).toBeGreaterThan(0);
                 logger.info("TC-001 -alumni_allEvents - Request: ", res.request); //Logging request
                 logger.info("TC-001 -alumni_allEvents - Response: ", res.text); // Logging response
+                let data = JSON.stringify(res.body);
+                fs.writeFileSync('./responses/logcont_list.json', data);
                 done();
             });
     });
