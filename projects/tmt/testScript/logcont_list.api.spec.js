@@ -4,7 +4,7 @@ const superTest = require('supertest'),
     Logger = require('../../../utils/logger'),
     logger = new Logger('superTest'),
     api_key = global.APIKEY,
-    // schema = require('../schema/events'),
+    schema = require('../schema/logcont_list_sch'),
     data = require('../testData/logcont_list'),
     Joi = require('joi');
     const fs = require('fs');
@@ -27,6 +27,7 @@ describe('GET_List', () => {
                 logger.info("TC-001 -alumni_allEvents - Response: ", res.text); // Logging response
                 let data = JSON.stringify(res.body);
                 fs.writeFileSync('./responses/logcont_list.json', data);
+                expect(res.body[0]).toEqual(schema.V_data[0]);
                 done();
             });
     });

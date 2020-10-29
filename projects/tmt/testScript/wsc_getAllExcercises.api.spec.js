@@ -4,11 +4,11 @@ const superTest = require('supertest'),
     Logger = require('../../../utils/logger'),
     logger = new Logger('superTest'),
     api_key = global.APIKEY,
-    // schema = require('../schema/events'),
+    schema = require('../schema/wsc_getAllExcercises_sch'),
     data = require('../testData/wsc_getAllExcercises'),
     Joi = require('joi');
     const fs = require('fs');
-    
+
 jest.setTimeout(100000);
 
 
@@ -28,6 +28,7 @@ describe('GET_AllExercises', () => {
                 logger.info("TC-001 -alumni_allEvents - Response: ", res.text); // Logging response
                 let data = JSON.stringify(res.body);
                 fs.writeFileSync('./responses/wsc_getAllExcercises.json', data);
+                expect(res.body[0]).toEqual(schema.V_data[0]);
                 done();
             });
     });
